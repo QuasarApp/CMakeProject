@@ -12,14 +12,17 @@ if(TARGET ${PROJECT_NAME})
   return()
 endif()
 
-find_package(Qt5 COMPONENTS Core Test REQUIRED)
+find_package(Qt5 COMPONENTS Core Test QUIET)
 
 include(CMake/ccache.cmake)
 include(CMake/QuasarAppCITargets.cmake)
 
 # Add sub directories
 add_subdirectory(src)
-add_subdirectory(tests)
+if (EXISTS ${Qt5_DIR})
+    add_subdirectory(tests)
+endif()
+
 
 
 initAll()
