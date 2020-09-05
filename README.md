@@ -7,7 +7,7 @@ Fork me and replase RENAME_ME to Name of your new project.
 
 # This template supports next build targets:
 
-|   command or make target   |  description    |
+|   Command or make target   |  Description    |
 |------|------|
 | **make test** | The run tests for a project (dependet of Qt Tests, so you need to add Qt in Cmake using CMAKE_PREFIX_PATH) |
 | **make doc** | The generate a documentation for a project (dependet of doxygen) |
