@@ -23,13 +23,10 @@ file(GLOB SOURCE_CPP
     "units/*.cpp" "units/*.qrc"
 )
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/backward-cpp")
-
 set(PUBLIC_INCUDE_DIR ${PUBLIC_INCUDE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/units")
 
 
 add_executable(${CURRENT_PROJECT} ${SOURCE_CPP})
-
 target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt5::Test)
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
