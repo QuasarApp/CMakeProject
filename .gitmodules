@@ -4,3 +4,6 @@
 [submodule "DoxyStyle"]
 	path = DoxyStyle
 	url = https://github.com/QuasarApp/DoxyStyle.git
+[submodule "tests/backward-cpp"]
+	path = tests/backward-cpp
+	url = https://github.com/QuasarApp/backward-cpp

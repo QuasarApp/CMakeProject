@@ -1,6 +1,7 @@
 #include <QtTest>
 #include "exampletest.h"
 
+#include <backward.hpp>
 /**
  * @brief The tstMain class - this is main test class
  */
@@ -10,7 +11,7 @@ class tstMain : public QObject
 
 private:
     QList<Test*> _tests;
-
+    backward::SignalHandling bt;
 
 public:
     tstMain();
@@ -28,6 +29,8 @@ private slots:
  * init all availabel units for testsing
  */
 tstMain::tstMain() {
+
+    QVERIFY(bt.loaded());
 
     // init xample unit test
     _tests.push_back(new ExampleTest());
