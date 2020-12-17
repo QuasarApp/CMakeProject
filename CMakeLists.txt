@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020-2020 QuasarApp.
+# Copyright (C) 2020-2021 QuasarApp.
 # Distributed under the lgplv3 software license, see the accompanying
 # Everyone is permitted to copy and distribute verbatim copies
 # of this license document, but changing it is not allowed.
@@ -12,14 +12,16 @@ if(TARGET ${PROJECT_NAME})
   return()
 endif()
 
-find_package(Qt5 COMPONENTS Core Test QUIET)
+set (QT_VERSION_MAJOR OFF)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test REQUIRED)
 
 include(CMake/ccache.cmake)
 include(CMake/QuasarAppCITargets.cmake)
 
 # Add sub directories
 add_subdirectory(src)
-if (EXISTS ${Qt5_DIR})
+if (${QT_VERSION_MAJOR})
     add_subdirectory(tests)
 endif()
 

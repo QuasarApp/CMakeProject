@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020-2020 QuasarApp.
+# Copyright (C) 2020-2021 QuasarApp.
 # Distributed under the lgplv3 software license, see the accompanying
 # Everyone is permitted to copy and distribute verbatim copies
 # of this license document, but changing it is not allowed.
@@ -14,6 +14,7 @@ include(../CMake/Version.cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -21,7 +22,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_definitions(-DRENAME_ME_LIBRARY)
 
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
 
 file(GLOB SOURCE_CPP
     "*.cpp" "*.qrc"
@@ -35,7 +36,7 @@ set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/Private")
 
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_CPP})
-target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Core)
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt::Core)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_INCUDE_DIR})
