@@ -7,8 +7,7 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-include(../CMake/ProjectOut.cmake)
-include(../CMake/Version.cmake)
+
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -18,31 +17,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-add_definitions(-DRENAME_ME_LIBRARY)
+include(../CMake/ProjectOut.cmake)
+include(../CMake/Version.cmake)
+include(../CMake/tr.cmake)
 
-
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
-
-file(GLOB SOURCE_CPP
-    "*.cpp" "*.qrc"
-    "src/*.cpp" "src/*.qrc"
-    "src/Private/*.cpp" "src/Private/*.qrc"
-)
-
-set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(PUBLIC_INCUDE_DIR ${PUBLIC_INCUDE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/Private")
-
-
-add_library(${PROJECT_NAME} ${SOURCE_CPP})
-
-if (${QT_VERSION_MAJOR})
-    target_link_libraries(${PROJECT_NAME} PUBLIC Qt::Core)
-endif()
-
-target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCUDE_DIR})
-target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_INCUDE_DIR})
-
-
-setVersion(0 0 1)
+add_subdirectory(Library)
+add_subdirectory(Example)

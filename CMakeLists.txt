@@ -31,3 +31,4 @@ endif()
 initAll()
 
 addDoc(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
+addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")

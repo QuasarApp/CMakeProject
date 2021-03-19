@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>RENAME_MEModule/qmldir</file>
+        <file>RENAME_MEModule/RENAME_ME.qml</file>
+    </qresource>
+</RCC>
