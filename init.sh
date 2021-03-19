@@ -13,10 +13,12 @@ fi
 REPLACESTRING="s+RENAME_ME+$1+g"
 echo $REPLACESTRING
 
-find . -type f -exec sed -i $REPLACESTRING {} +
-find . -type f -exec sed -i $REPLACESTRING {} +
+find . -type f -not -path ".git" -exec sed -i $REPLACESTRING {} +
+find . -type f -not -path ".git" -exec sed -i $REPLACESTRING {} +
 
-find src -type f -name '*RENAME_ME*' -exec mv {} ${{}/RENAME_ME/$1} \;
+find src -type d -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
+
+find src -type f -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
 set -e
 
 git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
