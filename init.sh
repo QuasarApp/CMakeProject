@@ -13,8 +13,8 @@ fi
 REPLACESTRING="s+RENAME_ME+$1+g"
 echo $REPLACESTRING
 
-find . -type f -not -path ".git" -exec sed -i $REPLACESTRING {} +
-find . -type f -not -path ".git" -exec sed -i $REPLACESTRING {} +
+find . -type f -not -path ".git/*" -exec sed -i $REPLACESTRING {} +
+find . -type f -not -path ".git/*" -exec sed -i $REPLACESTRING {} +
 
 find src -type d -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
 
