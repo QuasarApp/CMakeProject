@@ -1,3 +1,10 @@
+//#
+//# Copyright (C) 2020-2021 QuasarApp.
+//# Distributed under the lgplv3 software license, see the accompanying
+//# Everyone is permitted to copy and distribute verbatim copies
+//# of this license document, but changing it is not allowed.
+//#
+
 #include <QtTest>
 #include "exampletest.h"
 
@@ -59,9 +66,9 @@ void tstMain::unitTests() {
 
     QDir(path).removeRecursively();
 
-    QTimer::singleShot(0, [&app, this]() {
+    QTimer::singleShot(0, this, [&app, this]() {
 
-        for (auto test : _tests ) {
+        for (auto test : qAsConst(_tests) ) {
             test->test();
             delete test;
         }
