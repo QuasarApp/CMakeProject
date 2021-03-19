@@ -15,8 +15,8 @@ echo $REPLACESTRING
 
 find . -type f -exec sed -i $REPLACESTRING {} +
 find . -type f -exec sed -i $REPLACESTRING {} +
-#find . -type f -exec sed -i 's+http://example.com+https://example.com+g' {} +
 
+find src -type f -name '*RENAME_ME*' -exec mv {} ${{}/RENAME_ME/$1} \;
 set -e
 
 git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
