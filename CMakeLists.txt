@@ -28,10 +28,31 @@ include(CMake/QuasarAppCITargets.cmake)
 
 # Add sub directories
 add_subdirectory(src)
-if (${QT_VERSION_MAJOR})
-    add_subdirectory(tests)
+
+if (NOT DEFINED RENAME_ME_TESTS)
+    set(RENAME_ME_TESTS ON)
+
+    if (DEFINED TARGET_PLATFORM_TOOLCHAIN)
+        if (${TARGET_PLATFORM_TOOLCHAIN} STREQUAL "wasm32")
+            set(RENAME_ME_TESTS OFF)
+        endif()
+    endif()
+
+    if (ANDROID)
+        set(RENAME_ME_TESTS OFF)
+    endif()
+
+    if (NOT QT_VERSION_MAJOR)
+        set(RENAME_ME_TESTS OFF)
+    endif()
 endif()
 
+
+if (RENAME_ME_TESTS)
+    add_subdirectory(tests)
+else()
+    message("The ${PROJECT_NAME} tests is disabled.")
+endif()
 
 initAll()
 
