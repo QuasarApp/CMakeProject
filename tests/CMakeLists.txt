@@ -11,14 +11,6 @@ set(CURRENT_PROJECT ${PROJECT_NAME}Test)
 
 include(../CMake/ProjectOut.cmake)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 
 file(GLOB SOURCE_CPP
     "*.cpp" "*.qrc"
@@ -29,7 +21,7 @@ set(PUBLIC_INCUDE_DIR ${PUBLIC_INCUDE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/units")
 
 
 add_executable(${CURRENT_PROJECT} ${SOURCE_CPP})
-target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt::Test RENAME_ME)
+target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::Test RENAME_ME)
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 

@@ -9,24 +9,27 @@ cmake_minimum_required(VERSION 3.14)
 
 set(CURRENT_PROJECT "${PROJECT_NAME}Eaxample")
 
-
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
-
 file(GLOB SOURCE_CPP
-    "*.cpp" "*.qrc"
-    "src/*.cpp" "src/*.qrc"
-    "src/Private/*.cpp" "src/Private/*.qrc"
+    "*.cpp"
+     "Private/*.cpp"
 )
 
-set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(PUBLIC_INCUDE_DIR ${PUBLIC_INCUDE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/Private")
+if (${QT_VERSION_MAJOR})
+    file(GLOB SOURCE_QRC
+        "*.qrc"
+        "Private/*.qrc"
+    )
 
-add_executable(${CURRENT_PROJECT} ${SOURCE_CPP})
+endif()
+
+set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
+set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
+
+add_executable(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
 if (${QT_VERSION_MAJOR})
-    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt::Core)
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core)
 endif()
 target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME})
 

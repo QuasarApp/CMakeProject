@@ -19,7 +19,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(../CMake/ProjectOut.cmake)
 include(../CMake/Version.cmake)
-include(../CMake/tr.cmake)
+include(../CMake/QtUtils.cmake)
 
 add_subdirectory(Library)
 add_subdirectory(Example)
