@@ -7,10 +7,9 @@
 
 #include "RENAME_ME_global.h"
 
+inline void initRENAME_MEResources() { Q_INIT_RESOURCE(RENAME_ME); }
+
 namespace RENAME_ME {
-
-inline void RENAME_ME_EXPORT initRENAME_MEResources() { Q_INIT_RESOURCE(RENAME_ME); }
-
 
 bool RENAME_ME_EXPORT init();
 
