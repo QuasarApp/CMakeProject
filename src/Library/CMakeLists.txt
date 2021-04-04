@@ -11,14 +11,15 @@ add_definitions(-DRENAME_ME_LIBRARY)
 
 
 file(GLOB SOURCE_CPP
-    "*.cpp"
-     "Private/*.cpp"
+    "*RENAME_ME/*.cpp"
+     "RENAME_ME/Private/*.cpp"
 )
 
 if (${QT_VERSION_MAJOR})
     file(GLOB SOURCE_QRC
         "*.qrc"
-        "Private/*.qrc"
+        "RENAME_ME/*.qrc"
+        "RENAME_ME/Private/*.qrc"
     )
 
 endif()
