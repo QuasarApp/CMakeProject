@@ -23,8 +23,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
 
-include(CMake/ccache.cmake)
-include(CMake/QuasarAppCITargets.cmake)
+include(submodules/CMake/ccache.cmake)
+include(submodules/CMake/QuasarAppCITargets.cmake)
 
 # Add sub directories
 add_subdirectory(src)

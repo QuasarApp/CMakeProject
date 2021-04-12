@@ -17,10 +17,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-include(../CMake/ProjectOut.cmake)
-include(../CMake/Version.cmake)
-include(../CMake/QtUtils.cmake)
-include(../CMake/crossplatform/crossplatform.cmake)
+include(../submodules/CMake/ProjectOut.cmake)
+include(../submodules/CMake/Version.cmake)
+include(../submodules/CMake/QtUtils.cmake)
+include(../submodules/CMake/crossplatform/crossplatform.cmake)
 
 add_subdirectory(Library)
 add_subdirectory(Example)
