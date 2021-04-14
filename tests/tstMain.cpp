@@ -8,15 +8,19 @@
 #include <QtTest>
 #include "exampletest.h"
 
+// Use This macros for initialize your own test classes.
+// Check exampletests
+#define TestCase(name, testClass) \
+    void name() { \
+        initTest(new testClass()); \
+    }
+
 /**
  * @brief The tstMain class - this is main test class
  */
 class tstMain : public QObject
 {
     Q_OBJECT
-
-private:
-    QList<Test*> _tests;
 
 
 public:
@@ -25,9 +29,22 @@ public:
     ~tstMain();
 
 private slots:
-    void initTestCase();
-    void unitTests();
 
+
+    // BEGIN TESTS CASES
+    TestCase(exampleTest, ExampleTest)
+    // END TEST CASES
+
+private:
+
+    /**
+     * @brief initTest This method prepare @a test for run in the QApplication loop.
+     * @param test are input test case class.
+     */
+    void initTest(Test* test);
+
+    QList<Test*> _tests;
+    QCoreApplication *_app = nullptr;
 };
 
 /**
@@ -37,28 +54,10 @@ private slots:
 tstMain::tstMain() {
 
     // init xample unit test
-    _tests.push_back(new ExampleTest());
-
-}
-
-tstMain::~tstMain() {
-
-}
-
-/**
- * @brief tstMain::initTestCase - this method contains initialization of the data tests.
- */
-void tstMain::initTestCase() {
-}
-
-/**
- * @brief tstMain::unitTests create application for testing
- */
-void tstMain::unitTests() {
     int argc =0;
     char * argv[] = {nullptr};
 
-    QCoreApplication app(argc, argv);
+    _app = new QCoreApplication(argc, argv);
     QCoreApplication::setApplicationName("testRENAME_ME");
     QCoreApplication::setOrganizationName("QuasarApp");
 
@@ -66,17 +65,21 @@ void tstMain::unitTests() {
 
     QDir(path).removeRecursively();
 
-    QTimer::singleShot(0, this, [&app, this]() {
+}
 
-        for (auto test : qAsConst(_tests) ) {
-            test->test();
-            delete test;
-        }
+tstMain::~tstMain() {
+    _app->exit(0);
+    delete _app;
+}
 
-        app.exit(0);
+void tstMain::initTest(Test *test) {
+    QTimer::singleShot(0, this, [this, test]() {
+        test->test();
+        delete test;
+        _app->exit(0);
     });
 
-    app.exec();
+    _app->exec();
 }
 
 QTEST_APPLESS_MAIN(tstMain)
