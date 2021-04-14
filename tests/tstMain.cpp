@@ -43,7 +43,6 @@ private:
      */
     void initTest(Test* test);
 
-    QList<Test*> _tests;
     QCoreApplication *_app = nullptr;
 };
 
