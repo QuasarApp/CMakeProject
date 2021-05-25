@@ -9,9 +9,6 @@ cmake_minimum_required(VERSION 3.14)
 
 set(CURRENT_PROJECT ${PROJECT_NAME}Test)
 
-include(../submodules/CMake/ProjectOut.cmake)
-
-
 file(GLOB SOURCE_CPP
     "*.cpp" "*.qrc"
     "units/*.cpp" "units/*.qrc"
