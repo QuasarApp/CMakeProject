@@ -23,11 +23,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
 
-include(submodules/CMake/ccache.cmake)
-include(submodules/CMake/QuasarAppCITargets.cmake)
-
-# Add sub directories
-add_subdirectory(src)
+include(submodules/CMake/QuasarApp.cmake)
 
 if (NOT DEFINED RENAME_ME_TESTS)
     set(RENAME_ME_TESTS ON)
@@ -47,6 +43,23 @@ if (NOT DEFINED RENAME_ME_TESTS)
     endif()
 endif()
 
+if (NOT DEFINED RENAME_ME_EXAMPLE)
+    set(RENAME_ME_EXAMPLE ON)
+
+    if (ANDROID)
+        set(RENAME_ME_EXAMPLE OFF)
+    endif()
+
+    if (NOT QT_VERSION_MAJOR)
+        set(RENAME_ME_EXAMPLE OFF)
+    endif()
+endif()
+
+add_subdirectory(src/Library)
+
+if (DEFINED RENAME_ME_EXAMPLE)
+    add_subdirectory(src/Example)
+endif()
 
 if (RENAME_ME_TESTS)
     add_subdirectory(tests)
