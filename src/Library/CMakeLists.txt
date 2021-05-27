@@ -12,20 +12,20 @@ add_definitions(-DRENAME_ME_LIBRARY)
 
 file(GLOB SOURCE_CPP
     "*RENAME_ME/*.cpp"
-     "RENAME_ME/Private/*.cpp"
+     "private/*.cpp"
 )
 
 if (${QT_VERSION_MAJOR})
     file(GLOB SOURCE_QRC
         "*.qrc"
         "RENAME_ME/*.qrc"
-        "RENAME_ME/Private/*.qrc"
+        "private/*.qrc"
     )
 
 endif()
 
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
+set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/private")
 
 
 add_library(${PROJECT_NAME} ${SOURCE_CPP} ${SOURCE_QRC})
