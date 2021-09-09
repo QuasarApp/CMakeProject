@@ -53,7 +53,7 @@ file(MAKE_DIRECTORY ${TARGET_DIR})
 if (ANDROID)
 
     set(SNAKE_EXTRA_LIBS
-        ${CURRENT_PROJECT}
+        ${PROJECT_NAME}
 #        libName
         )
 
