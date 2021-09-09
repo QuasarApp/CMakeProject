@@ -25,9 +25,9 @@ if (ANDROID)
 endif()
 
 if (NOT QT_VERSION_MAJOR)
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick Test QUIET)
 endif()
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Test QUIET)
 
 include(submodules/CMake/QuasarApp.cmake)
 

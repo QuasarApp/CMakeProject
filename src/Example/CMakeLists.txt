@@ -89,8 +89,7 @@ else()
 endif()
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    # Add This line if your project use the Quick module
-    # qt_import_qml_plugins(${CURRENT_PROJECT})
+    qt_import_qml_plugins(${CURRENT_PROJECT})
     qt_finalize_executable(${CURRENT_PROJECT})
 endif()
 
