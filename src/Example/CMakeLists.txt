@@ -32,7 +32,7 @@ set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
 if (${QT_VERSION_MAJOR} EQUAL 6)
 
     qt_add_executable(${CURRENT_PROJECT} MANUAL_FINALIZATION ${ALL_SOURCES})
-    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core)
+
 else()
     if (ANDROID)
         add_library(${CURRENT_PROJECT} ${ALL_SOURCES})
