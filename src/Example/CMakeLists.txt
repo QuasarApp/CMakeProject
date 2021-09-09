@@ -55,8 +55,7 @@ if (${QT_VERSION_MAJOR})
 
         set(SNAKE_EXTRA_LIBS
             ${CURRENT_PROJECT}
-            QuasarApp
-            Heart
+    #        libName
             )
 
     #    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS AndroidExtras REQUIRED)
