@@ -22,23 +22,91 @@ if (${QT_VERSION_MAJOR})
 
 endif()
 
+set(ALL_SOURCES ${SOURCE_CPP} ${SOURCE_QRC})
+
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
 
 
-if (ANDROID)
-    add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
-else ()
-    add_executable(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
+if (${QT_VERSION_MAJOR})
+
+    qt_add_executable(${CURRENT_PROJECT} MANUAL_FINALIZATION ${ALL_SOURCES})
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core)
+else()
+    if (ANDROID)
+        add_library(${CURRENT_PROJECT} ${ALL_SOURCES})
+    else ()
+        add_executable(${CURRENT_PROJECT} ${ALL_SOURCES} )
+    endif()
+
 endif()
 
-if (${QT_VERSION_MAJOR})
-    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core)
-endif()
 target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME})
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
+
+if (${QT_VERSION_MAJOR})
+    SET(TARGET_DIR "${CMAKE_SOURCE_DIR}/Distro")
+    file(MAKE_DIRECTORY ${TARGET_DIR})
+
+    if (ANDROID)
+
+        set(SNAKE_EXTRA_LIBS
+            ${CURRENT_PROJECT}
+            QuasarApp
+            Heart
+            )
+
+    #    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS AndroidExtras REQUIRED)
+    #    target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::AndroidExtras)
+
+        addDeployAPK(${CURRENT_PROJECT}
+                    "${CMAKE_CURRENT_LIST_DIR}/android"
+                    "QuasarAppProject"
+                    "${SIGPATH}/quasarapp.keystore"
+                    "${SIGPASS_QUASARAPP}"
+                    "${TARGET_DIR}"
+                    "${SNAKE_EXTRA_LIBS}")
+
+
+        file(GLOB java_files
+           "android/src/com/quasarapp/androidtools/*.java"
+           "android/*.xml"
+           "android/*.gradle"
+           "android/gradlew"
+           "android/gradle.*"
+
+        )
+
+        add_custom_target(${name}Android
+            SOURCES ${java_files}
+        )
+
+    else()
+        # Desctop deploying
+        addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+
+    endif()
+
+    if(QT_VERSION_MAJOR EQUAL 6)
+        qt_import_qml_plugins(${CURRENT_PROJECT})
+        qt_finalize_executable(${CURRENT_PROJECT})
+    endif()
+
+    set(LANGS ${CMAKE_CURRENT_SOURCE_DIR}/languages/en.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/ru.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/uk.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/ja.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/tr.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/zh.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/de.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/fr.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/es.ts
+              ${CMAKE_CURRENT_SOURCE_DIR}/languages/pl.ts)
+
+    prepareQM(${CURRENT_PROJECT} ${CMAKE_CURRENT_SOURCE_DIR}/../ "${LANGS}")
+endif()
 
 

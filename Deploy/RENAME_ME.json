@@ -1,5 +1,8 @@
 {
-    "binDir": "./../src/build/Debug/RENAME_MEEaxample",
+    "bin": [
+        "src/build/Debug/RENAME_MEEaxample",
+        "src/build/Debug/RENAME_MEEaxample.exe"
+        ],
     "clear": true,
     "libDir": "./../",
     "recursiveDepth": "10",
