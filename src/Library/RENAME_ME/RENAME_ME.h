@@ -7,6 +7,9 @@
 
 #include "RENAME_ME_global.h"
 
+#ifdef Q_OS_ANDROID
+#include <QObject>
+#endif
 inline void initRENAME_MEResources() { Q_INIT_RESOURCE(RENAME_ME); }
 
 namespace RENAME_ME {
