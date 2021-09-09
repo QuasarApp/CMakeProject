@@ -48,14 +48,12 @@ endif()
 if (NOT DEFINED RENAME_ME_EXAMPLE)
     set(RENAME_ME_EXAMPLE ON)
 
-    if (ANDROID)
-        set(RENAME_ME_EXAMPLE OFF)
-    endif()
-
     if (NOT QT_VERSION_MAJOR)
         set(RENAME_ME_EXAMPLE OFF)
     endif()
 endif()
+
+initAll()
 
 add_subdirectory(src/Library)
 
@@ -69,7 +67,6 @@ else()
     message("The ${PROJECT_NAME} tests is disabled.")
 endif()
 
-initAll()
 
 addDoc(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
 addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
