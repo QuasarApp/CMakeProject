@@ -67,3 +67,4 @@ _deps
 *_autogen*
 
 src/Example/android/AndroidManifest.xml
+src/Example/Deploy/RENAME_ME.json
