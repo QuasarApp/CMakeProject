@@ -28,6 +28,7 @@ set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
 
+updateGitVars()
 
 if (${QT_VERSION_MAJOR} EQUAL 6)
 
@@ -85,7 +86,12 @@ if (ANDROID)
 
 else()
     # Desctop deploying
-    addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/../../Deploy/RENAME_ME.json")
+
+    message(GIT_COMMIT_COUNT = ${GIT_COMMIT_COUNT})
+
+    set(DeployFile "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+    configure_file("${DeployFile}.in" ${DeployFile} @ONLY)
+    addDeployFromCustomFile("RENAME_ME" ${DeployFile})
 
 endif()
 
