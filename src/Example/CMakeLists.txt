@@ -52,7 +52,12 @@ file(MAKE_DIRECTORY ${TARGET_DIR})
 
 if (ANDROID)
 
-    set(SNAKE_EXTRA_LIBS
+    set(ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android CACHE INTERNAL "")
+    set(ENV{ANDROID_API_VERSION} 31)
+    set(ANDROID_API_VERSION $ENV{ANDROID_API_VERSION})
+    set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+
+    set(RENAME_ME_EXTRA_LIBS
         ${PROJECT_NAME}
 #        libName
         )
@@ -66,8 +71,13 @@ if (ANDROID)
                 "${SIGPATH}/quasarapp.keystore"
                 "${SIGPASS_QUASARAPP}"
                 "${TARGET_DIR}"
-                "${SNAKE_EXTRA_LIBS}")
+                "${RENAME_ME_EXTRA_LIBS}")
 
+    set(manifest_file "${CMAKE_CURRENT_SOURCE_DIR}/android/AndroidManifest.xml")
+    configure_file("${manifest_file}.in" ${manifest_file} @ONLY)
+
+    set(gradle_file "${CMAKE_CURRENT_SOURCE_DIR}/android/build.gradle")
+    configure_file("${gradle_file}.in" ${gradle_file} @ONLY)
 
     file(GLOB java_files
        "android/src/com/quasarapp/androidtools/*.java"
@@ -82,9 +92,23 @@ if (ANDROID)
         SOURCES ${java_files}
     )
 
+elseif(IOS)
+#    set_xcode_property(${CURRENT_PROJECT} PRODUCT_BUNDLE_IDENTIFIER ${CHEATCARD_PACKAGE_ID} All)
+
+    set_target_properties(${CURRENT_PROJECT} PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER ${RENAME_ME_PACKAGE_ID}
+        MACOSX_BUNDLE_BUNDLE_VERSION ${RENAME_ME_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${RENAME_ME_VERSION}
+    )
 else()
     # Desctop deploying
-    addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/../../Deploy/RENAME_ME.json")
+
+    message(GIT_COMMIT_COUNT = ${GIT_COMMIT_COUNT})
+
+    set(DeployFile "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+    configure_file("${DeployFile}.in" ${DeployFile} @ONLY)
+
+    addDeployFromCustomFile("RENAME_ME" ${DeployFile})
 
 endif()
 
