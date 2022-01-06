@@ -8,6 +8,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 set(CURRENT_PROJECT "${PROJECT_NAME}Eaxample")
+option(SIGN_APP "This option enable od disabled sign apk and aab files" ON)
 
 file(GLOB SOURCE_CPP
     "*.cpp"
@@ -28,6 +29,7 @@ set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
 
+updateGitVars()
 
 if (${QT_VERSION_MAJOR} EQUAL 6)
 
@@ -65,14 +67,25 @@ if (ANDROID)
 #    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS AndroidExtras REQUIRED)
 #    target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::AndroidExtras)
 
-    addDeployAPK(${CURRENT_PROJECT}
-                "${CMAKE_CURRENT_LIST_DIR}/android"
-                "QuasarAppProject"
-                "${SIGPATH}/quasarapp.keystore"
-                "${SIGPASS_QUASARAPP}"
-                "${TARGET_DIR}"
-                "${RENAME_ME_EXTRA_LIBS}")
+    if (SIGN_APP)
+        message("SIGN_APP")
+        addDeploySignedAPK(${CURRENT_PROJECT}
+            "${CMAKE_CURRENT_LIST_DIR}/android"
+            "QuasarAppProject"
+            "${SIGPATH}/quasarapp.keystore"
+            "${SIGPASS_QUASARAPP}"
+            "${TARGET_DIR}"
+            "${RENAME_ME_EXTRA_LIBS}")
 
+    else()
+        message("NO_SIGN_APP")
+
+        addDeployAPK(${CURRENT_PROJECT}
+            "${CMAKE_CURRENT_LIST_DIR}/android"
+            "${TARGET_DIR}"
+            "${RENAME_ME_EXTRA_LIBS}")
+
+    endif()
     set(manifest_file "${CMAKE_CURRENT_SOURCE_DIR}/android/AndroidManifest.xml")
     configure_file("${manifest_file}.in" ${manifest_file} @ONLY)
 

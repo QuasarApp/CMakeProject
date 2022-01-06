@@ -63,6 +63,9 @@ endif()
 
 initAll()
 
+updateGitVars()
+set(RENAME_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+
 add_subdirectory(src/Library)
 
 if (DEFINED RENAME_ME_EXAMPLE)

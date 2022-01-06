@@ -13,7 +13,7 @@
         ],
     "extraLib": "crypto",
     "targetDir": "@CMAKE_SOURCE_DIR@/Distro",
-    "deployVersion": "@CHEAT_CARD_VERSION@",
+    "deployVersion": "@RENAME_VERSION@",
 
 }
 
