@@ -13,6 +13,8 @@ add_definitions(-DRENAME_ME_LIBRARY)
 file(GLOB SOURCE_CPP
     "*RENAME_ME/*.cpp"
      "private/*.cpp"
+     "*RENAME_ME/*.h"
+      "private/*.h"
 )
 
 if (${QT_VERSION_MAJOR})

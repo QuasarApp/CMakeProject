@@ -11,8 +11,9 @@ set(CURRENT_PROJECT "${PROJECT_NAME}Eaxample")
 option(SIGN_APP "This option enable od disabled sign apk and aab files" ON)
 
 file(GLOB SOURCE_CPP
-    "*.cpp"
+    "*.cpp" "*.h"
      "Private/*.cpp"
+     "Private/*.h"
 )
 
 if (${QT_VERSION_MAJOR})

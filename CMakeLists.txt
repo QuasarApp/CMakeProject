@@ -57,6 +57,8 @@ if (NOT DEFINED RENAME_ME_EXAMPLE)
     endif()
 endif()
 
+make_directory(Distro)
+
 initAll()
 
 updateGitVars()
