@@ -20,7 +20,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (ANDROID)
+if (ANDROID OR IOS)
     set(BUILD_SHARED_LIBS ON)
 endif()
 
@@ -31,6 +31,10 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
 
 include(submodules/CMake/QuasarApp.cmake)
 
+updateGitVars()
+set(RENAME_ME_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+set(RENAME_ME_PACKAGE_ID "quasarapp.core.RENAME_ME")
+
 if (NOT DEFINED RENAME_ME_TESTS)
     set(RENAME_ME_TESTS ON)
 
@@ -40,7 +44,7 @@ if (NOT DEFINED RENAME_ME_TESTS)
         endif()
     endif()
 
-    if (ANDROID)
+    if (ANDROID OR IOS)
         set(RENAME_ME_TESTS OFF)
     endif()
 

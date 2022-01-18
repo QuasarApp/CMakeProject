@@ -66,5 +66,7 @@ CTestTestfile.cmake
 _deps
 *_autogen*
 
-src/Example/android/AndroidManifest.xml
+# Configured files
+build.gradle
+AndroidManifest.xml
 src/Example/Deploy/RENAME_ME.json
