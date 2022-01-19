@@ -1,6 +1,6 @@
 #
-# Copyright (C) 2020-2021 QuasarApp.
-# Distributed under the lgplv3 software license, see the accompanying
+# Copyright (C) 2020-2022 QuasarApp.
+# Distributed under the GPLv3 software license, see the accompanying
 # Everyone is permitted to copy and distribute verbatim copies
 # of this license document, but changing it is not allowed.
 #
@@ -11,17 +11,18 @@ add_definitions(-DRENAME_ME_LIBRARY)
 
 
 file(GLOB SOURCE_CPP
-    "*RENAME_ME/*.cpp"
-     "private/*.cpp"
-     "*RENAME_ME/*.h"
-      "private/*.h"
+    "src/public/*.cpp"
+    "src/public/RENAME_ME/*.cpp"
+    "src/private/*.cpp"
+
+    "src/public/*.h"
+    "src/public/RENAME_ME/*.h"
+    "src/private/*.h"
 )
 
 if (${QT_VERSION_MAJOR})
     file(GLOB SOURCE_QRC
         "*.qrc"
-        "RENAME_ME/*.qrc"
-        "private/*.qrc"
     )
 
 endif()
@@ -46,3 +47,5 @@ prepareQM(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR} "${LANGS}")
 
 set(QML_IMPORT_PATH ${QML_IMPORT_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/src" CACHE STRING "" FORCE)
 
+set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/RENAME_ME/global.h")
+configure_file("${global_file}.in" ${global_file} @ONLY)
