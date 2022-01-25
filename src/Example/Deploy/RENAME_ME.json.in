@@ -4,10 +4,18 @@
         "src/build/Debug/RENAME_MEEaxample.exe"
         ],
     "clear": true,
-    "libDir": "@CMAKE_SOURCE_DIR@",
+    "binPrefix": "@CMAKE_BINARY_DIR@",
+    "libDir": [
+    "@CMAKE_SOURCE_DIR@",
+    "@CMAKE_PREFIX_PATH@",
+    "@CMAKE_BINARY_DIR@"
+    ],
     "recursiveDepth": "10",
     "deploySystem": false,
     "qmlDir": "../",
+    "deb": true,
+    "qif": true,
+    "zip": true,
     "ignoreEnv": [
          "@CMAKE_SOURCE_DIR@/Distro"
         ],
