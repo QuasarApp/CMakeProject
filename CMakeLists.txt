@@ -35,30 +35,15 @@ updateGitVars()
 set(RENAME_ME_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
 set(RENAME_ME_PACKAGE_ID "quasarapp.core.RENAME_ME")
 
-if (NOT DEFINED RENAME_ME_TESTS)
-    set(RENAME_ME_TESTS ON)
+option(RENAME_ME_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
+option(RENAME_ME_EXAMPLE "This option disables or enables example app of the ${PROJECT_NAME} project" ON)
 
-    if (DEFINED TARGET_PLATFORM_TOOLCHAIN)
-        if (${TARGET_PLATFORM_TOOLCHAIN} STREQUAL "wasm32")
-            set(RENAME_ME_TESTS OFF)
-        endif()
-    endif()
-
-    if (ANDROID OR IOS)
-        set(RENAME_ME_TESTS OFF)
-    endif()
-
-    if (NOT QT_VERSION_MAJOR)
-        set(RENAME_ME_TESTS OFF)
-    endif()
+if (ANDROID OR IOS OR NOT QT_VERSION_MAJOR OR QA_WASM32)
+    set(RENAME_ME_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
 endif()
 
-if (NOT DEFINED RENAME_ME_EXAMPLE)
-    set(RENAME_ME_EXAMPLE ON)
-
-    if (NOT QT_VERSION_MAJOR)
-        set(RENAME_ME_EXAMPLE OFF)
-    endif()
+if (NOT QT_VERSION_MAJOR)
+    set(RENAME_ME_EXAMPLE OFF CACHE BOOL "This option force disbled for Not Qt projects" FORCE)
 endif()
 
 make_directory(Distro)
