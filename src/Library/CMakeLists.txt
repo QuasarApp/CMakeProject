@@ -5,23 +5,21 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.18)
 
+get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+
+set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
 add_definitions(-DRENAME_ME_LIBRARY)
 
 
-file(GLOB SOURCE_CPP
-    "src/public/*.cpp"
-    "src/public/RENAME_ME/*.cpp"
-    "src/private/*.cpp"
-
-    "src/public/*.h"
-    "src/public/RENAME_ME/*.h"
-    "src/private/*.h"
+file(GLOB_RECURSE SOURCE_CPP
+    "src/*.cpp"
+    "src/*.h"
 )
 
 if (${QT_VERSION_MAJOR})
-    file(GLOB SOURCE_QRC
+    file(GLOB_RECURSE SOURCE_QRC
         "*.qrc"
     )
 
@@ -31,19 +29,19 @@ set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/public")
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
 
 
-add_library(${PROJECT_NAME} ${SOURCE_CPP} ${SOURCE_QRC})
+add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
 if (${QT_VERSION_MAJOR})
-    target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
 endif()
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCUDE_DIR})
-target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_INCUDE_DIR})
+target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
+target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
 
 set(LANGS ${CMAKE_CURRENT_SOURCE_DIR}/languages/en.ts)
 
 
-prepareQM(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR} "${LANGS}")
+prepareQM(${CURRENT_PROJECT} ${CMAKE_CURRENT_SOURCE_DIR} "${LANGS}")
 
 set(QML_IMPORT_PATH ${QML_IMPORT_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/src" CACHE STRING "" FORCE)
 

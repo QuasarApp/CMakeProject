@@ -21,7 +21,7 @@
         ],
     "extraLib": "crypto",
     "targetDir": "@CMAKE_SOURCE_DIR@/Distro",
-    "deployVersion": "@RENAME_VERSION@",
+    "deployVersion": "@RENAME_ME_VERSION@",
 
 }
 

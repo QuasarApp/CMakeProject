@@ -5,23 +5,21 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.18)
 
-set(CURRENT_PROJECT "${PROJECT_NAME}Eaxample")
+get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+
+set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
 option(SIGN_APP "This option enable od disabled sign apk and aab files" ON)
 
-file(GLOB SOURCE_CPP
+file(GLOB_RECURSE SOURCE_CPP
     "*.cpp" "*.h"
-     "Private/*.cpp"
-     "Private/*.h"
 )
 
 if (${QT_VERSION_MAJOR})
-    file(GLOB SOURCE_QRC
+    file(GLOB_RECURSE SOURCE_QRC
         "*.qrc"
-        "Private/*.qrc"
     )
-
 endif()
 
 set(ALL_SOURCES ${SOURCE_CPP} ${SOURCE_QRC})
@@ -45,7 +43,7 @@ else()
 
 endif()
 
-target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME})
+target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME}Library)
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
@@ -61,7 +59,7 @@ if (ANDROID)
     set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
 
     set(RENAME_ME_EXTRA_LIBS
-        ${PROJECT_NAME}
+        ${PROJECT_NAME}Library
 #        libName
         )
 

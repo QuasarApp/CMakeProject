@@ -5,20 +5,22 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.18)
 
-set(CURRENT_PROJECT ${PROJECT_NAME}Test)
+get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-file(GLOB SOURCE_CPP
+set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
+
+file(GLOB_RECURSE SOURCE_CPP
     "*.cpp" "*.h" "*.qrc"
-    "units/*.cpp" "units/*.h" "units/*.qrc"
 )
+
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(PUBLIC_INCUDE_DIR ${PUBLIC_INCUDE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/units")
 
 
 add_executable(${CURRENT_PROJECT} ${SOURCE_CPP})
-target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::Test RENAME_ME)
+target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::Test ${PROJECT_NAME}Library)
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 
