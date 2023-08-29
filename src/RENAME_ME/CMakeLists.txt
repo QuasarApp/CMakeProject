@@ -5,11 +5,9 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 
-get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-
-set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
+set(CURRENT_PROJECT "${PROJECT_NAME}")
 add_definitions(-DRENAME_ME_LIBRARY)
 
 
@@ -18,22 +16,16 @@ file(GLOB_RECURSE SOURCE_CPP
     "src/*.h"
 )
 
-if (${QT_VERSION_MAJOR})
-    file(GLOB_RECURSE SOURCE_QRC
-        "*.qrc"
-    )
-
-endif()
+file(GLOB_RECURSE SOURCE_QRC
+    "*.qrc"
+)
 
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/public")
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
 
-
 add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
-if (${QT_VERSION_MAJOR})
-    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
-endif()
+target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})

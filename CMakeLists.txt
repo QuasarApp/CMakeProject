@@ -5,7 +5,7 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 project(RENAME_ME LANGUAGES CXX)
 if(TARGET ${PROJECT_NAME})
   message("The ${PROJECT_NAME} arledy included in main Project")
@@ -17,17 +17,15 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (ANDROID OR IOS)
     set(BUILD_SHARED_LIBS ON)
 endif()
 
-if (NOT QT_VERSION_MAJOR)
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
-endif()
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
+find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Test QUIET)
 
 include(submodules/CMake/QuasarApp.cmake)
 
@@ -38,22 +36,18 @@ set(RENAME_ME_PACKAGE_ID "quasarapp.core.RENAME_ME")
 option(RENAME_ME_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
 option(RENAME_ME_EXAMPLE "This option disables or enables example app of the ${PROJECT_NAME} project" ON)
 
-if (ANDROID OR IOS OR NOT QT_VERSION_MAJOR OR QA_WASM32)
+if (ANDROID OR IOS OR QA_WASM32)
     set(RENAME_ME_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
-endif()
-
-if (NOT QT_VERSION_MAJOR)
-    set(RENAME_ME_EXAMPLE OFF CACHE BOOL "This option force disbled for Not Qt projects" FORCE)
 endif()
 
 make_directory(Distro)
 
 initAll()
 
-add_subdirectory(src/Library)
+add_subdirectory(src/RENAME_ME)
 
 if (DEFINED RENAME_ME_EXAMPLE)
-    add_subdirectory(src/Example)
+    add_subdirectory(src/example)
 endif()
 
 if (RENAME_ME_TESTS)
@@ -64,4 +58,4 @@ endif()
 
 configure_file_in(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
 addDoc(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
-addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/deploy/RENAME_ME.json")

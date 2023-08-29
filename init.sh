@@ -7,21 +7,51 @@ then
     echo "You call this script wtth wrong arguments."
     echo "Example for start script:"
     echo "./init.sh MyCmakeProject"
+    echo "Usage: $0 <replacement_string>"
+
     exit 1
 fi
 
-REPLACESTRING="s+RENAME_ME+$1+g"
-echo $REPLACESTRING
+replacement="$1"
 
-find . -not -path '*/\.*' -type f -exec sed -i $REPLACESTRING {} +
-find . -not -path '*/\.*' -type f -exec sed -i $REPLACESTRING {} +
+rename_files_and_folders() {
+    local dir="$1"
+    local old_str="$2"
+    local new_str="$3"
 
-find src -type d -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
+    for item in "$dir"/*; do
+        if [ -d "$item" ]; then
+            new_name=$(echo "$item" | sed "s/$old_str/$new_str/g")
+            if [ "$item" != "$new_name" ]; then
+                mv "$item" "$new_name"
+                echo "Renamed directory: $item -> $new_name"
+            fi
+            rename_files_and_folders "$new_name" "$old_str" "$new_str"
+        elif [ -f "$item" ]; then
+            sed -i "s/$old_str/$new_str/g" "$item"
 
-find src -type f -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
-find Deploy -type f -name '*RENAME_ME*' -exec sh -c 'x="{}"; NEWSTR=$(echo "$x" | sed "s/RENAME_ME/'$1'/"); mv "$x" "$NEWSTR"' \;
+            new_name=$(echo "$item" | sed "s/$old_str/$new_str/g")
+            if [ "$item" != "$new_name" ]; then
+                mv "$item" "$new_name"
+                echo "Renamed file: $item -> $new_name"
+            fi
+        fi
+    done
+}
 
-set -e
+uppercase_string=$(echo "$replacement" | tr '[:lower:]' '[:upper:]')
+
+rename_files_and_folders "." "RENAME_ME_EXPORT" "${uppercase_string}_EXPORT"
+rename_files_and_folders "." "RENAME_ME_VERSION" "${uppercase_string}_VERSION"
+rename_files_and_folders "." "RENAME_ME_LIBRARY" "${uppercase_string}_LIBRARY"
+rename_files_and_folders "." "RENAME_ME_EXAMPLE" "${uppercase_string}_EXAMPLE"
+rename_files_and_folders "." "RENAME_ME_TESTS" "${uppercase_string}_TESTS"
+rename_files_and_folders "." "RENAME_ME_PACKAGE_ID" "${uppercase_string}_PACKAGE_ID"
+
+rename_files_and_folders "." "RENAME_ME" "$replacement"
+
+echo "Replacement complete."
+
 
 git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
     while read path_key path
@@ -30,6 +60,3 @@ git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
         url=$(git config -f .gitmodules --get "$url_key")
         git submodule add $url $path
     done
-
-
-

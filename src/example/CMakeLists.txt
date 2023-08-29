@@ -5,45 +5,32 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 
 get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
+set(CURRENT_PROJECT "${PROJECT_NAME}_${CURRENT_PROJECT_DIR}")
 option(SIGN_APP "This option enable od disabled sign apk and aab files" ON)
 
 file(GLOB_RECURSE SOURCE_CPP
     "*.cpp" "*.h"
 )
 
-if (${QT_VERSION_MAJOR})
-    file(GLOB_RECURSE SOURCE_QRC
-        "*.qrc"
-    )
-endif()
+file(GLOB_RECURSE SOURCE_QRC
+    "*.qrc"
+)
 
 set(ALL_SOURCES ${SOURCE_CPP} ${SOURCE_QRC})
 
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Private")
+set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/private")
 
 updateGitVars()
 
-if (${QT_VERSION_MAJOR} EQUAL 6)
+qt_add_executable(${CURRENT_PROJECT} ${ALL_SOURCES})
 
-    qt_add_executable(${CURRENT_PROJECT} MANUAL_FINALIZATION ${ALL_SOURCES})
-
-else()
-    if (ANDROID)
-        add_library(${CURRENT_PROJECT} ${ALL_SOURCES})
-    else ()
-        add_executable(${CURRENT_PROJECT} ${ALL_SOURCES} )
-    endif()
-
-endif()
-
-target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME}Library)
+target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME})
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
@@ -62,9 +49,6 @@ if (ANDROID)
         ${PROJECT_NAME}Library
 #        libName
         )
-
-#    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS AndroidExtras REQUIRED)
-#    target_link_libraries(${CURRENT_PROJECT} PRIVATE Qt${QT_VERSION_MAJOR}::AndroidExtras)
 
     if (SIGN_APP)
         message("SIGN_APP")
@@ -117,19 +101,12 @@ else()
 
     message(GIT_COMMIT_COUNT = ${GIT_COMMIT_COUNT})
 
-    set(DeployFile "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+    set(DeployFile "${CMAKE_CURRENT_SOURCE_DIR}/deploy/RENAME_ME.json")
     configure_file("${DeployFile}.in" ${DeployFile} @ONLY)
 
     addDeployFromCustomFile("RENAME_ME" ${DeployFile})
 
 endif()
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    # Add This line if your project use the Quick module
-    # qt_import_qml_plugins(${CURRENT_PROJECT})
-    qt_finalize_executable(${CURRENT_PROJECT})
-endif()
-
 
 set(LANGS ${CMAKE_CURRENT_SOURCE_DIR}/languages/en.ts
           ${CMAKE_CURRENT_SOURCE_DIR}/languages/ru.ts
