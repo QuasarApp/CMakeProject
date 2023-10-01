@@ -100,11 +100,9 @@ else()
     # Desctop deploying
 
     message(GIT_COMMIT_COUNT = ${GIT_COMMIT_COUNT})
+    configure_file_in(${CURRENT_PROJECT} "${CMAKE_CURRENT_SOURCE_DIR}/deploy/RENAME_ME.json")
 
-    set(DeployFile "${CMAKE_CURRENT_SOURCE_DIR}/deploy/RENAME_ME.json")
-    configure_file("${DeployFile}.in" ${DeployFile} @ONLY)
-
-    addDeployFromCustomFile("RENAME_ME" ${DeployFile})
+    addDeployFromCustomFile(${CURRENT_PROJECT} "${CMAKE_CURRENT_SOURCE_DIR}/deploy/RENAME_ME.json")
 
 endif()
 
