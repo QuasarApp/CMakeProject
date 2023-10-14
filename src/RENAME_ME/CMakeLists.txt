@@ -25,7 +25,11 @@ set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
 
 add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
-target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
+if (RENAME_ME_TESTS)
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME}testcore)
+else()
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
+endif()
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})

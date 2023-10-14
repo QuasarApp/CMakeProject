@@ -12,6 +12,8 @@
 #include <QDateTime>
 #include <QVariantMap>
 
+namespace testcore {
+
 bool TestUtils::funcPrivateConnect(const std::function<bool()> &requestFunc,
                                    const std::function<bool()> &checkFunc,
                                    const std::function<QMetaObject::Connection()> &connectFunction) const {
@@ -50,4 +52,4 @@ bool TestUtils::wait(const std::function<bool()> &forWait, int msec) const {
     QCoreApplication::processEvents();
     return forWait();
 }
-
+}

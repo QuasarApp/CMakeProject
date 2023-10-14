@@ -11,8 +11,11 @@
 
 #include "functional"
 #include <QMetaObject>
+#include "testcore/global.h"
 
-class TestUtils
+namespace testcore {
+
+class TEST_CORE_EXPORT TestUtils
 {
 public:
     TestUtils();
@@ -28,5 +31,5 @@ public:
                             const std::function<bool ()> &checkFunc) const;
 
 };
-
+}
 #endif // TESTUTILS_H

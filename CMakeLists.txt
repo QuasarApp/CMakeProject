@@ -44,6 +44,10 @@ make_directory(Distro)
 
 initAll()
 
+if (RENAME_ME_TESTS)
+    add_subdirectory(src/testcore)
+endif()
+
 add_subdirectory(src/RENAME_ME)
 
 if (DEFINED RENAME_ME_EXAMPLE)

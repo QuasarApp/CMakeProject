@@ -8,12 +8,13 @@
 
 #ifndef EXAMPLE_TEST_H
 #define EXAMPLE_TEST_H
-#include "test.h"
-#include "testutils.h"
+
+#include <testcore/itest.h>
+#include "testcore/testutils.h"
 
 #include <QtTest>
 
-class ExampleTest: public Test, protected TestUtils
+class ExampleTest: public testcore::ITest, protected testcore::TestUtils
 {
 public:
     ExampleTest();

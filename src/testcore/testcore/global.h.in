@@ -5,18 +5,16 @@
 //# of this license document, but changing it is not allowed.
 //#
 
-#ifndef RENAME_ME_GLOBAL_H
-#define RENAME_ME_GLOBAL_H
+#ifndef TEST_CORE_GLOBAL_H
+#define TEST_CORE_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 
-#define RENAME_ME_VERSION "0.89.ae3db6a"
-
-#if defined(RENAME_ME_LIBRARY)
-#  define RENAME_ME_EXPORT Q_DECL_EXPORT
+#if defined(TEST_CORE_LIBRARY)
+#  define TEST_CORE_EXPORT Q_DECL_EXPORT
 #else
-#  define RENAME_ME_EXPORT Q_DECL_IMPORT
+#  define TEST_CORE_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif //RENAME_ME_GLOBAL_H
+#endif //TEST_CORE_GLOBAL_H
 
