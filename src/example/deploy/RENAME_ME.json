@@ -4,11 +4,11 @@
         "src/example/RENAME_ME_example.exe"
         ],
     "clear": true,
-    "binPrefix": "/media/D/builds/build-CMakeProject-Desktop_Qt_6_5_2_GCC_64bit-Debug",
+    "binPrefix": "/media/D/builds/build-CMakeProject-Desktop_Qt_6_6_1_GCC_64bit-Debug",
     "libDir": [
     "/media/D/builds/CMakeProject",
-    "/home/andrei/Qt/6.5.2/gcc_64",
-    "/media/D/builds/build-CMakeProject-Desktop_Qt_6_5_2_GCC_64bit-Debug"
+    "/home/andrei/Qt/6.6.1/gcc_64",
+    "/media/D/builds/build-CMakeProject-Desktop_Qt_6_6_1_GCC_64bit-Debug"
     ],
     "recursiveDepth": "10",
     "deploySystem": false,
@@ -21,7 +21,7 @@
         ],
     "extraLib": "crypto",
     "targetDir": "/media/D/builds/CMakeProject/Distro",
-    "deployVersion": "0.89.ae3db6a"
+    "deployVersion": "0.90.8fef03d"
 
 }
 
