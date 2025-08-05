@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020-2024 QuasarApp.
+# Copyright (C) 2020-2025 QuasarApp.
 # Distributed under the GPLv3 software license, see the accompanying
 # Everyone is permitted to copy and distribute verbatim copies
 # of this license document, but changing it is not allowed.
@@ -13,16 +13,10 @@ if(TARGET ${PROJECT_NAME})
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (ANDROID OR IOS)
-    set(BUILD_SHARED_LIBS ON)
-endif()
 
 find_package(Qt6 COMPONENTS Core REQUIRED)
 find_package(Qt6 COMPONENTS Test QUIET)
