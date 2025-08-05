@@ -10,7 +10,7 @@
 
 #include <QtCore/qglobal.h>
 
-#define RENAME_ME_VERSION "0.91.a2b556f"
+#define RENAME_ME_VERSION "0.92.18c4ec7"
 
 #if defined(RENAME_ME_LIBRARY)
 #  define RENAME_ME_EXPORT Q_DECL_EXPORT

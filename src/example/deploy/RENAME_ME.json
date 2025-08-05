@@ -21,7 +21,7 @@
         ],
     "extraLib": "crypto",
     "targetDir": "/media/D/builds/CMakeProject/Distro",
-    "deployVersion": "0.91.a2b556f"
+    "deployVersion": "0.92.18c4ec7"
 
 }
 

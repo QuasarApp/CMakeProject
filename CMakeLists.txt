@@ -18,13 +18,18 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick REQUIRED)
 find_package(Qt6 COMPONENTS Test QUIET)
+
+qt_standard_project_setup()
+qt_policy(SET QTP0001 NEW)
 
 include(submodules/CMake/QuasarApp.cmake)
 
-updateGitVars()
+updateGitVarsWithHash("a2b556fd8efa14f1aed88329d8310cc53b2582f4")
+
 set(RENAME_ME_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+
 set(RENAME_ME_PACKAGE_ID "quasarapp.core.RENAME_ME")
 
 option(RENAME_ME_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
